@@ -19,6 +19,20 @@ Both tools below follow the same pattern: the first run computes results (which 
 Runs sparse feature matching + egomotion estimation (Sec. III-A/B) across the whole sequence and plays back the source video next to the live, growing trajectory estimate, paced to the real capture rate:
 
 ```
+python -m stereoscan.visualization.live_player <dataset_dir> [--calib PATH] [--start N] [--end N] [--fps N]
+```
+
+| Flag | Default | Meaning |
+|---|---|---|
+| `dataset_dir` | *(required)* | KITTI-raw-layout sequence directory (contains `image_00/`, `image_01/`, ...). |
+| `--calib PATH` | auto-detected | Path to `calib_cam_to_cam.txt`. Auto-detection checks `<dataset_dir>/calib_cam_to_cam.txt`, then `<dataset_dir>/../config/calib_cam_to_cam.txt`. |
+| `--start N` | `0` | First frame index to process. |
+| `--end N` | end of sequence | Last frame index to process. |
+| `--fps N` | real capture cadence (~9.7fps for KITTI) | Overrides playback speed with a flat rate instead of pacing to each frame's real recorded timestamp. |
+
+Example:
+
+```
 python -m stereoscan.visualization.live_player 2011_09_26_drive_0001_sync
 ```
 
@@ -28,7 +42,21 @@ https://github.com/user-attachments/assets/7f855c94-364c-4f65-922e-7f906710393e
 
 ### 2.2 3D reconstruction + camera trajectory
 
-Runs the full pipeline (Sec. III-A through III-D) - egomotion, dense stereo matching, and greedy multi-frame point fusion - then opens a free-navigation 3D viewer (drag to orbit, scroll to zoom) showing the accumulated colored point cloud with the camera trajectory overlaid. `--end 10` limits the run to the first 10 frames (dense reconstruction is the slow part, ~13-40s/frame):
+Runs the full pipeline (Sec. III-A through III-D) - egomotion, dense stereo matching, and greedy multi-frame point fusion - then opens a free-navigation 3D viewer (drag to orbit, scroll to zoom) showing the accumulated colored point cloud with the camera trajectory overlaid:
+
+```
+python -m stereoscan.visualization.point_cloud_viewer <dataset_dir> [--calib PATH] [--start N] [--end N] [--grid-step N]
+```
+
+| Flag | Default | Meaning |
+|---|---|---|
+| `dataset_dir` | *(required)* | KITTI-raw-layout sequence directory (contains `image_00/`, `image_01/`, ...). |
+| `--calib PATH` | auto-detected | Path to `calib_cam_to_cam.txt` (same auto-detection as above). |
+| `--start N` | `0` | First frame index to process. |
+| `--end N` | end of sequence | Last frame index to process. Dense reconstruction is the slow part of this tool (~13-40s/frame), so limiting the range - e.g. `--end 10` - is worth doing before committing to a full-sequence run. |
+| `--grid-step N` | `10` | Support-point grid spacing for dense stereo matching (Sec. III-C). Smaller = slower but a more precise adaptive disparity range per frame; larger = faster but coarser. |
+
+Example (first 10 frames only):
 
 ```
 python -m stereoscan.visualization.point_cloud_viewer 2011_09_26_drive_0001_sync --end 10
