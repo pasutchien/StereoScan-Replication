@@ -1,0 +1,30 @@
+# Byte-compiled / cache
+__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+
+# Generated pipeline caches (regenerate via the CLI tools; can be tens of MB+)
+*_cache.npz
+*.trajectory.npy
+
+# KITTI raw dataset directories (external data, not source - see README)
+*_sync/
+
+# Packaging artifacts
+build/
+dist/
+*.egg-info/
+
+# Virtual environments
+.venv/
+venv/
+env/
+
+# Editor / OS cruft
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+desktop.ini
+*.swp
