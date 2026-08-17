@@ -1,4 +1,4 @@
-# Stereo-scan Recreate
+# Stereo-scan Replication
 
 ## 1. Overview
 
