@@ -22,9 +22,9 @@ Runs sparse feature matching + egomotion estimation (Sec. III-A/B) across the wh
 python -m stereoscan.visualization.live_player 2011_09_26_drive_0001_sync
 ```
 
-Example output ([images/egomotion.mp4](images/egomotion.mp4)):
+Example output:
 
-<video src="images/egomotion.mp4" controls width="700"></video>
+https://github.com/user-attachments/assets/7f855c94-364c-4f65-922e-7f906710393e
 
 ### 2.2 3D reconstruction + camera trajectory
 
